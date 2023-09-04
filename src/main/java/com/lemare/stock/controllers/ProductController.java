@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 @RestController
 @RequestMapping("/products")
@@ -41,7 +39,6 @@ public class ProductController {
     public ResponseEntity<Object> newProduct(@RequestBody @Valid ProductDto productDto) {
         var product = new Product();
         BeanUtils.copyProperties(productDto, product);
-        product.setEntry(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(service.saveProduct(product));
     }
     @PutMapping("/{id}")
@@ -50,7 +47,7 @@ public class ProductController {
             var product = service.findById(id);
             product.setName(productDto.getName());
             product.setPrice(productDto.getPrice());
-            product.setEntry(productDto.getEntry());
+            product.setDescription(productDto.getDescription());
             product.setImgUrl(productDto.getImgUrl());
             product.setCategories(productDto.getCategories());
 

@@ -3,17 +3,15 @@ package com.lemare.stock.dtos;
 import com.lemare.stock.models.Category;
 import jakarta.validation.constraints.NotBlank;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 public class ProductDto {
     @NotBlank
     private String name;
     @NotBlank
-    private BigDecimal price;
+    private Double price;
     @NotBlank
-    private LocalDateTime entry;
+    private String description;
 
     private String imgUrl;
 
@@ -27,20 +25,20 @@ public class ProductDto {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public LocalDateTime getEntry() {
-        return entry;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEntry(LocalDateTime entry) {
-        this.entry = entry;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImgUrl() {

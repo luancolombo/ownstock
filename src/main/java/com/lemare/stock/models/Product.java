@@ -4,8 +4,6 @@ package com.lemare.stock.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 @Entity
@@ -19,9 +17,9 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private BigDecimal price;
+    private Double price;
     @Column(nullable = false)
-    private LocalDateTime entry;
+    private String description;
 
     private String imgUrl;
     @ManyToMany
@@ -32,11 +30,11 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(Long id, String name, BigDecimal price, LocalDateTime entry, String imgUrl) {
+    public Product(Long id, String name, Double price, String description, String imgUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.entry = entry;
+        this.description = description;
         this.imgUrl = imgUrl;
     }
 
@@ -52,22 +50,20 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public LocalDateTime getEntry() {
-        return entry;
+    public String getDescription() {
+        return description;
     }
-
-    public void setEntry(LocalDateTime entry) {
-        this.entry = entry;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
     public String getImgUrl() {
         return imgUrl;
     }
