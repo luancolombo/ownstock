@@ -2,7 +2,7 @@ package com.lemare.stock.services;
 
 import com.lemare.stock.models.Product;
 import com.lemare.stock.repositories.ProductRepository;
-import com.lemare.stock.services.Exceptions.ResourceNotFoundException;
+import com.lemare.stock.services.Exceptions.ProductNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,8 @@ public class ProductService {
         return repository.findAll();
     }
     public Product findById(Long id) {
-        Optional<Product> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+        Optional<Product> product = repository.findById(id);
+        return product.orElseThrow(() -> new ProductNotFoundException(id));
     }
     @Transactional
     public void deleteProduct(Long id) {

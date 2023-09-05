@@ -2,7 +2,7 @@ package com.lemare.stock.services;
 
 import com.lemare.stock.models.Category;
 import com.lemare.stock.repositories.CategoryRepository;
-import com.lemare.stock.services.Exceptions.ResourceNotFoundException;
+import com.lemare.stock.services.Exceptions.CategoryNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,8 @@ public class CategoryService {
         return repository.findAll();
     }
     public Category findById(Long id) {
-        Optional<Category> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+        Optional<Category> category = repository.findById(id);
+        return category.orElseThrow(() -> new CategoryNotFoundException(id));
     }
     @Transactional
     public void deleteCategory(Long id) {

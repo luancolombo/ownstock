@@ -3,7 +3,7 @@ package com.lemare.stock.controllers;
 import com.lemare.stock.dtos.ProductDto;
 import com.lemare.stock.models.Product;
 import com.lemare.stock.services.Exceptions.DatabaseException;
-import com.lemare.stock.services.Exceptions.ResourceNotFoundException;
+import com.lemare.stock.services.Exceptions.ProductNotFoundException;
 import com.lemare.stock.services.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -32,19 +32,19 @@ public class ProductController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
-        var product = service.findById(id);
+        Product product = service.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
     @PostMapping
     public ResponseEntity<Object> newProduct(@RequestBody @Valid ProductDto productDto) {
-        var product = new Product();
+        Product product = new Product();
         BeanUtils.copyProperties(productDto, product);
         return ResponseEntity.status(HttpStatus.CREATED).body(service.saveProduct(product));
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDto productDto){
         try {
-            var product = service.findById(id);
+            Product product = service.findById(id);
             product.setName(productDto.getName());
             product.setPrice(productDto.getPrice());
             product.setDescription(productDto.getDescription());
@@ -53,17 +53,17 @@ public class ProductController {
 
             return ResponseEntity.status(HttpStatus.OK).body(service.saveProduct(product));
         }catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException(id);
+            throw new ProductNotFoundException(id);
         }
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") Long id) {
         try {
-            var product = service.findById(id);
+            Product product = service.findById(id);
             service.deleteProduct(id);
             return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfully.");
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException(id);
+            throw new ProductNotFoundException(id);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
